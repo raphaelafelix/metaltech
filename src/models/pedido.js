@@ -105,5 +105,68 @@ module.exports = {
   criarPedido,
   listarPedidos,
   listarPedidosDoCliente,
-  atualizarStatus
+  atualizarStatus,
+  excluirPedido
 };
+
+async function excluirPedido(id) {
+  const db = await getDB();
+
+  db.run(`DELETE FROM pedidos WHERE id = ?`, [id]);
+
+  salvarDB();
+
+  return { mensagem: "Pedido excluído com sucesso!" };
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

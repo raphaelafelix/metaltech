@@ -60,3 +60,16 @@ router.put("/pedidos/:id/status", auth, async (req, res) => {
 });
 
 module.exports = router;
+
+router.delete("/pedidos/:id", auth, async (req, res) => {
+
+  if (req.usuario.funcao !== "admin") {
+    return res.status(403).json({
+      erro: "Apenas admin pode excluir pedidos"
+    });
+  }
+
+  const resultado = await Pedido.excluirPedido(req.params.id);
+
+  res.json(resultado);
+});
