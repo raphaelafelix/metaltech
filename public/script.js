@@ -486,7 +486,7 @@ async function carregarAdmin() {
   let total = 0;
   let pendentes = 0;
 
-  pedidos.forEach((pedido) => {
+  pedidos.filter(pedido => pedido.status !== "Cancelado").forEach((pedido) => {
 
     if (pedido.status !== "Cancelado") {
           total += pedido.arrecadado;
