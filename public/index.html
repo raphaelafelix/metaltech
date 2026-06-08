@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+
+  <title>Metal Tech</title>
+
+  <link rel="stylesheet" href="/style.css" />
+</head>
+
+<body>
+
+  <section id="loginPage" class="login-page">
+
+    <div class="login-left">
+      <div class="logo-metal">
+        <img src="./imagens/Group.svg" alt="">
+      </div>
+    </div>
+
+    <div class="login-right">
+
+      <div class="login-box">
+
+        <h1>MetalTech</h1>
+        <p>Seus pedidos, ainda mais práticos</p>
+
+        <div class="input-box">
+          <img src="./imagens/user.svg" alt="">
+          <input id="email" type="text" placeholder="usuário" value="" />
+        </div>
+
+        <div class="input-box senha-box">
+          <img src="./imagens/password.svg" alt="">
+          <input id="senha" type="password" placeholder="senha" value="" />
+
+          <button type="button" class="mostrar-senha" onclick="toggleSenha()">
+            👁
+          </button>
+        </div>
+
+        <div class="input-box">
+          <img src="./imagens/work.svg" alt="">
+
+          <select id="funcao">
+            <option value="">Selecione a função</option>
+            <option value="admin" selected>Administrador</option>
+            <option value="cliente">Cliente</option>
+          </select>
+        </div>
+
+        <button class="login-btn" onclick="fazerLogin()">
+          Fazer Login
+        </button>
+
+        <p id="erroLogin" class="erro"></p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <section id="sistemaPage" class="sistema escondido">
+
+    <aside class="sidebar">
+
+      <div class="perfil-topo">
+        <span id="nomeUsuario">perfil</span>
+      </div>
+
+      <button class="menu" onclick="mostrarTelaPrincipal()">
+        Dashboard
+        <img src="./imagens/whitebook.svg" alt="">
+      </button>
+
+      <button class="menu sair" onclick="sair()">
+        Sair
+        <img src="./imagens/whitedoor.svg" alt="">
+      </button>
+
+    </aside>
+
+    <main class="conteudo">
+
+      <div id="adminPage" class="tela escondido">
+
+        <div class="cards-area">
+
+          <div class="card">
+            <small>Total faturado</small>
+            <h2 id="totalFaturado">R$ 0,00</h2>
+          </div>
+
+          <div class="card">
+            <small>Pendentes</small>
+            <h2 id="pendentes">0</h2>
+          </div>
+
+          <div class="clientes-quadrado">
+            <strong id="totalPedidos">0</strong>
+            <span>pedidos</span>
+          </div>
+
+        </div>
+
+        <h2 class="titulo-pedidos">Pedidos</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Cliente</th>
+              <th>Cod.</th>
+              <th>Produto</th>
+              <th>Qtd.</th>
+              <th>Total</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+
+          <tbody id="tabelaAdmin"></tbody>
+        </table>
+
+      </div>
+
+      <div id="clientePage" class="tela escondido">
+
+        <section class="secao-produtos">
+
+          <div class="topo-cliente">
+            <div>
+              <h2 class="titulo-pedidos">Mostruário de Produtos</h2>
+              <p class="subtitulo">Escolha os produtos e adicione ao carrinho.</p>
+            </div>
+
+            <button class="btn-carrinho-mobile" onclick="abrirCarrinho()">
+              🛒 Carrinho
+              <span id="contadorCarrinhoMobile">0</span>
+            </button>
+          </div>
+
+          <div id="mostruarioProdutos" class="mostruario"></div>
+
+        </section>
+
+        <section class="layout-cliente">
+
+          <div class="area-pedidos">
+
+            <h2 class="titulo-pedidos">Meus pedidos</h2>
+
+            <table>
+              <thead>
+                
+                <tr>
+                  <th>Cliente</th>
+                  <th>Telefone</th>
+                  <th>Data</th>
+                  <th>Cod.</th>
+                  <th>Produto</th>
+                  <th>Qtd.</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>Ação</th>
+                </tr>
+                
+              </thead>
+
+              <tbody id="tabelaCliente"></tbody>
+            </table>
+
+          </div>
+
+          <aside id="carrinhoBox" class="carrinho-box">
+
+            <div class="carrinho-topo">
+              <h2>🛒 Carrinho</h2>
+
+              <button class="fechar-carrinho" onclick="fecharCarrinho()">
+                ✕
+              </button>
+            </div>
+
+            <p class="carrinho-subtitulo">Produtos selecionados</p>
+
+            <div id="listaCarrinho" class="lista-carrinho">
+              <div class="carrinho-vazio">
+                Seu carrinho está vazio.
+              </div>
+            </div>
+
+            <div class="carrinho-total">
+              <span>Total</span>
+              <strong id="totalCarrinho">R$ 0,00</strong>
+            </div>
+
+            <button class="btn-finalizar" onclick="enviarCarrinho()">
+              Enviar Pedido
+            </button>
+
+          </aside>
+
+        </section>
+
+      </div>
+
+    </main>
+
+  </section>
+
+  <div id="fundoCarrinho" class="fundo-carrinho" onclick="fecharCarrinho()"></div>
+
+  <div id="modalQuantidade" class="modal-qtd escondido">
+
+    <div class="modal-qtd-box">
+
+      <h2 id="modalProdutoNome">Produto</h2>
+
+      <p>Digite a quantidade desejada:</p>
+
+      <input id="inputQuantidadeModal" type="number" min="1" value="1" />
+
+      <div class="modal-qtd-botoes">
+
+        <button onclick="fecharModalQuantidade()" class="btn-cancelar">
+          Cancelar
+        </button>
+
+        <button onclick="confirmarQuantidade()" class="btn-confirmar">
+          Adicionar ao carrinho
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- MODAL FINALIZAR PEDIDO -->
+
+<div id="modalFinalizar" class="modal-qtd escondido">
+
+  <div class="modal-qtd-box">
+
+    <h2>
+      Finalizar Pedido
+    </h2>
+
+    <p>
+      Informe seus dados para contato
+    </p>
+
+    <input
+      id="nomeContato"
+      type="text"
+      placeholder="Nome completo"
+    >
+
+    <input
+      id="telefoneContato"
+      type="text"
+      placeholder="Telefone / WhatsApp"
+    >
+
+    <div class="modal-qtd-botoes">
+
+      <button
+        class="btn-cancelar"
+        onclick="fecharFinalizacao()"
+      >
+        Cancelar
+      </button>
+
+      <button
+        class="btn-confirmar"
+        onclick="confirmarPedidoFinal()"
+      >
+        Confirmar Pedido
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+  <script src="/script.js"></script>
+
+</body>
+
+</html>
