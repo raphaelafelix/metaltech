@@ -19,7 +19,7 @@ async function criarPedido(usuario_id, produto_id, quantidade) {
 async function listarPedidos() {
   const db = await getDB();
 
-  const result = db.exec(` // consulta SQL para listar todos os pedidos, juntando as tabelas de pedidos, usuários e produtos para obter as informações completas de cada pedido, ordenando por ID em ordem decrescente
+  const result = db.exec(`
     SELECT 
       pedidos.id,
       usuarios.nome AS repositor,
@@ -119,22 +119,6 @@ async function excluirPedido(id) {
 
   return { mensagem: "Pedido excluído com sucesso!" };
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

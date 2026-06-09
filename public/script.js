@@ -107,7 +107,7 @@ async function carregarMostruario() { // função para carregar o mostruário de
       imagensProdutos[produto.nome] ||
       "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=500&q=80"; // imagem genérica caso não tenha uma específica para o produto
 
-    area.innerHTML += ` // mostra as informações do produto na tela, incluindo a imagem, nome, código, valor e um botão para selecionar o produto e adicionar ao carrinho
+    area.innerHTML += `
       <div class="produto-card">
 
         <img
@@ -269,7 +269,7 @@ function atualizarCarrinho() {  // função para atualizar as informações do c
     quantidadeTotal += item.quantidade; // soma a quantidade do item à quantidade total de itens no carrinho
 
     lista.innerHTML += `
-      <div class="item-carrinho"> // mostra as informações do item no carrinho, incluindo nome, código, quantidade, valor, subtotal e botões para aumentar ou diminuir a quantidade ou remover o item do carrinho
+      <div class="item-carrinho">
 
         <div>
 
