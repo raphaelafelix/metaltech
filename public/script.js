@@ -452,6 +452,11 @@ async function carregarMeusPedidos() {
 
     tabela.innerHTML += `
       <tr>
+        <td>${pedido.cliente || "Não informado"}</td>
+
+        <td>${pedido.telefoneContato || "Não informado"}</td>
+
+        <td>${pedido.data}</td>
 
         <td>${pedido.codigo}</td>
 
@@ -468,7 +473,8 @@ async function carregarMeusPedidos() {
 
         <td>${pedido.status}</td>
 
-        <td>${pedido.data}</td>
+        
+
 
       </tr>
     `;
