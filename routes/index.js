@@ -26,8 +26,8 @@ router.get("/produtos", auth, async (req, res) => {
 router.post("/pedidos", auth, async (req, res) => {
   const { produto_id, quantidade } = req.body;
 
-  if (req.usuario.funcao !== "cliente") {
-    return res.status(403).json({ erro: "Apenas clientes podem fazer pedidos" });
+  if (req.usuario.funcao !== "repositor") {
+    return res.status(403).json({ erro: "Apenas repositores podem fazer pedidos" });
   }
 
   const pedido = await Pedido.criarPedido(req.usuario.id, produto_id, quantidade);
@@ -35,7 +35,7 @@ router.post("/pedidos", auth, async (req, res) => {
 });
 
 router.get("/meus-pedidos", auth, async (req, res) => {
-  const pedidos = await Pedido.listarPedidosDoCliente(req.usuario.id);
+  const pedidos = await Pedido.listarPedidosDoRepositor(req.usuario.id);
   res.json(pedidos);
 });
 

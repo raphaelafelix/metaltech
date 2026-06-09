@@ -72,13 +72,13 @@ function abrirSistema() {
   if (usuario.funcao === "admin") {
 
     document.getElementById("adminPage").classList.remove("escondido");
-    document.getElementById("clientePage").classList.add("escondido");
+    document.getElementById("repositorPage").classList.add("escondido");
 
     carregarAdmin();
 
   } else {
 
-    document.getElementById("clientePage").classList.remove("escondido");
+    document.getElementById("repositorPage").classList.remove("escondido");
     document.getElementById("adminPage").classList.add("escondido");
 
     carregarMostruario();
@@ -443,7 +443,7 @@ async function carregarMeusPedidos() {
 
   const tabela =
     document.getElementById(
-      "tabelaCliente"
+      "tabelaRepositor"
     );
 
   tabela.innerHTML = "";
@@ -500,7 +500,7 @@ async function carregarAdmin() {
       <tr>
 
         <td>
-          ${pedido.nomeContato || pedido.cliente || "Não informado"}
+          ${pedido.nomeContato || pedido.repositor || "Não informado"}
         </td>
 
         <td>

@@ -40,7 +40,7 @@ async function seed() {
     INSERT OR IGNORE INTO usuarios (id, nome, email, senha, funcao)
     VALUES 
     (1, 'Administrador', 'admin@metaltech.com', '${senha}', 'admin'),
-    (2, 'Cliente Teste', 'cliente@metaltech.com', '${senha}', 'cliente');
+    (2, 'Repositor', 'repositor@metaltech.com', '${senha}', 'repositor');
   `);
 
   db.run(`

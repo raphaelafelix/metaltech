@@ -255,7 +255,7 @@ body{
   font-weight:normal;
 }
 
-.clientes-quadrado{
+.repositor-quadrado{
   width:220px;
   height:120px;
   border-radius:18px;
@@ -269,7 +269,7 @@ body{
   box-shadow:0 5px 10px rgba(0,0,0,0.18);
 }
 
-.clientes-circulo strong{
+.repositor-circulo strong{
   font-size:48px;
 }
 
@@ -285,9 +285,9 @@ body{
   font-size:16px;
 }
 
-/* CLIENTE */
+/* REPOSITOR */
 
-.topo-cliente{
+.topo-repositor{
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -322,7 +322,7 @@ body{
   margin-bottom:35px;
 }
 
-.layout-cliente{
+.layout-repositor{
   display:grid;
   grid-template-columns:1fr 360px;
   gap:24px;
@@ -597,7 +597,7 @@ td select{
 /* RESPONSIVO */
 
 @media(max-width:1100px){
-  .layout-cliente{
+  .layout-repositor{
     grid-template-columns:1fr;
   }
 
@@ -708,7 +708,7 @@ td select{
     width:100%;
   }
 
-  .clientes-circulo{
+  .repositor-circulo{
     width:130px;
     height:130px;
   }
@@ -717,7 +717,7 @@ td select{
     font-size:26px;
   }
 
-  .topo-cliente{
+  .topo-repositor{
     align-items:flex-start;
     flex-direction:column;
   }

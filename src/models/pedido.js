@@ -21,7 +21,7 @@ async function listarPedidos() {
   const result = db.exec(`
     SELECT 
       pedidos.id,
-      usuarios.nome AS cliente,
+      usuarios.nome AS repositor,
       produtos.codigo,
       produtos.nome,
       pedidos.quantidade,
@@ -49,7 +49,7 @@ async function listarPedidos() {
   }));
 }
 
-async function listarPedidosDoCliente(usuario_id) {
+async function listarPedidosDoRepositor(usuario_id) {
   const db = await getDB();
 
   const stmt = db.prepare(`
@@ -104,7 +104,7 @@ async function atualizarStatus(id, status) {
 module.exports = {
   criarPedido,
   listarPedidos,
-  listarPedidosDoCliente,
+  listarPedidosDoRepositor,
   atualizarStatus,
   excluirPedido
 };
