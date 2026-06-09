@@ -1,11 +1,13 @@
-let token = localStorage.getItem("token") || "";
+// variáveis globais para armazenar o token de autenticação, as informações do usuário logado, a lista de produtos, o carrinho de compras e o produto selecionado no modal de quantidade, além de um objeto para mapear os nomes dos produtos às suas respectivas imagens
+
+let token = localStorage.getItem("token") || ""; // tenta recuperar o token de autenticação do localStorage para manter a sessão ativa, ou define como string vazia caso não exista
 let usuario = JSON.parse(localStorage.getItem("usuario")) || null;
 
 let produtosLista = [];
 let carrinho = [];
 let produtoSelecionadoModal = null;
 
-const imagensProdutos = {
+const imagensProdutos = { // mostra imagens na página
   "Parafuso": "/imagens/parafuso.jpg",
   "Porca": "/imagens/porca.jpg",
   "Arruela": "/imagens/arruela.jpg",
@@ -17,7 +19,7 @@ const imagensProdutos = {
   "Mola": "/imagens/mola.jpg"
 };
 
-async function fazerLogin() {
+async function fazerLogin() { // funções para executar login
   const email = document.getElementById("email").value;
   const senha = document.getElementById("senha").value;
   const funcao = document.getElementById("funcao").value;
@@ -25,12 +27,12 @@ async function fazerLogin() {
 
   erro.innerText = "";
 
-  if (!email || !senha || !funcao) {
+  if (!email || !senha || !funcao) { // valida e analisa se os campos estão preenchidos
     erro.innerText = "Preencha todos os campos.";
     return;
   }
 
-  try {
+  try { // tenta logar, analisando os dados internos e caso não esteja tudo certo, mostra mensagem de erro!
     const resposta = await fetch("/api/login", {
       method: "POST",
       headers: {
@@ -45,12 +47,12 @@ async function fazerLogin() {
 
     const dados = await resposta.json();
 
-    if (!resposta.ok) {
+    if (!resposta.ok) { // se a resposta for diferente (!) de ok, mostra mensagem de erro
       erro.innerText = dados.erro || "Dados incorretos";
       return;
     }
 
-    token = dados.token;
+    token = dados.token; // salva o token e as informações do usuário no localStorage para manter a sessão ativa
     usuario = dados.usuario;
 
     localStorage.setItem("token", token);
@@ -59,17 +61,17 @@ async function fazerLogin() {
     abrirSistema();
 
   } catch {
-    erro.innerText = "Erro ao conectar com o servidor.";
+    erro.innerText = "Erro ao conectar com o servidor."; // detecta erro
   }
 }
 
-function abrirSistema() {
-  document.getElementById("loginPage").classList.add("escondido");
-  document.getElementById("sistemaPage").classList.remove("escondido");
+function abrirSistema() { // mostra  a tela principal do sistema, escondendo a tela de login e mostrando as informações do usuário logado, além de carregar as informações específicas para cada função (admin ou repositor)
+  document.getElementById("loginPage").classList.add("escondido"); // escondendo a tela do login
+  document.getElementById("sistemaPage").classList.remove("escondido"); // mostrando a tela do sistema
 
-  document.getElementById("nomeUsuario").innerText = usuario.nome;
+  document.getElementById("nomeUsuario").innerText = usuario.nome; // mostrando o nome do usuário logado
 
-  if (usuario.funcao === "admin") {
+  if (usuario.funcao === "admin") { // se for admin, mostra a página de admin e carrega as informações de pedidos para o admin, caso contrário, mostra  a página do repositor e carrega as informações de mostruário e pedidos para o repositor
 
     document.getElementById("adminPage").classList.remove("escondido");
     document.getElementById("repositorPage").classList.add("escondido");
@@ -87,12 +89,12 @@ function abrirSistema() {
   }
 }
 
-async function carregarMostruario() {
+async function carregarMostruario() { // função para carregar o mostruário de produtos, buscando as informações da API e mostrando na tela, além de mostrar a imagem correspondente a cada produto (ou uma imagem genérica caso não tenha uma específica)
 
-  const area =
+  const area = // seleciona a área onde os produtos serão mostrados
     document.getElementById("mostruarioProdutos");
 
-  if (!area) return;
+  if (!area) return; // se a área não for encontrada, sai da função
 
   produtosLista =
     await buscar("/api/produtos");
@@ -103,9 +105,9 @@ async function carregarMostruario() {
 
     const imagem =
       imagensProdutos[produto.nome] ||
-      "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=500&q=80";
+      "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=500&q=80"; // imagem genérica caso não tenha uma específica para o produto
 
-    area.innerHTML += `
+    area.innerHTML += ` // mostra as informações do produto na tela, incluindo a imagem, nome, código, valor e um botão para selecionar o produto e adicionar ao carrinho
       <div class="produto-card">
 
         <img
@@ -139,7 +141,7 @@ async function carregarMostruario() {
   });
 }
 
-function adicionarAoCarrinho(produtoId) {
+function adicionarAoCarrinho(produtoId) { // função para adicionar um produto ao carrinho, mostrando um modal para selecionar a quantidade e confirmando a adição ao carrinho, além de validar a quantidade selecionada
 
   const produto =
     produtosLista.find(
@@ -157,7 +159,7 @@ function adicionarAoCarrinho(produtoId) {
     "modalProdutoNome"
   ).innerText = produto.nome;
 
-  document.getElementById(
+  document.getElementById( // seta a quantidade inicial como 1 no modal de seleção de quantidade
     "inputQuantidadeModal"
   ).value = 1;
 
@@ -170,7 +172,7 @@ function adicionarAoCarrinho(produtoId) {
   ).focus();
 }
 
-function fecharModalQuantidade() {
+function fecharModalQuantidade() { // função para fechar o modal de quantidade, limpando as informações do produto selecionado e escondendo o modal
 
   document.getElementById(
     "modalQuantidade"
@@ -200,7 +202,7 @@ function confirmarQuantidade() {
       item => item.id === produto.id
     );
 
-  if (itemExistente) {
+  if (itemExistente) { // se o produto já estiver no carrinho, apenas atualiza a quantidade, somando a nova quantidade à existente
 
     itemExistente.quantidade += quantidade;
 
@@ -215,11 +217,13 @@ function confirmarQuantidade() {
     });
   }
 
+
+  // após confirmar a quantidade, atualiza o carrinho, fecha o modal de quantidade e abre o carrinho para mostrar os itens adicionados
   atualizarCarrinho();
   fecharModalQuantidade();
   abrirCarrinho();
 }
-function atualizarCarrinho() {
+function atualizarCarrinho() {  // função para atualizar as informações do carrinho, mostrando os itens adicionados, a quantidade total e o valor total, além de permitir aumentar ou diminuir a quantidade de cada item ou remover o item do carrinho, e também atualizar o contador de itens no carrinho para a versão mobile
 
   const lista =
     document.getElementById("listaCarrinho");
@@ -232,11 +236,11 @@ function atualizarCarrinho() {
       "contadorCarrinhoMobile"
     );
 
-  if (!lista) return;
+  if (!lista) return; // se a lista do carrinho não for encontrada, sai da função
 
   lista.innerHTML = "";
 
-  if (carrinho.length === 0) {
+  if (carrinho.length === 0) { // se o carrinho estiver vazio, mostra uma mensagem indicando que o carrinho está vazio e zera o total e o contador de itens, caso exista a versão mobile
 
     lista.innerHTML = `
       <div class="carrinho-vazio">
@@ -244,10 +248,10 @@ function atualizarCarrinho() {
       </div>
     `;
 
-    totalCarrinho.innerText = "R$ 0,00";
+    totalCarrinho.innerText = "R$ 0,00"; // zera o total do carrinho
 
     if (contadorMobile) {
-      contadorMobile.innerText = "0";
+      contadorMobile.innerText = "0"; // zera o contador de itens no carrinho para a versão mobile
     }
 
     return;
@@ -256,16 +260,16 @@ function atualizarCarrinho() {
   let total = 0;
   let quantidadeTotal = 0;
 
-  carrinho.forEach((item) => {
+  carrinho.forEach((item) => { // para cada item no carrinho, calcula o subtotal (valor do item multiplicado pela quantidade), soma ao total do carrinho e à quantidade total de itens, e mostra as informações do item no carrinho, incluindo nome, código, quantidade, valor, subtotal e botões para aumentar ou diminuir a quantidade ou remover o item do carrinho
 
     const subtotal =
-      item.valor * item.quantidade;
+      item.valor * item.quantidade; // calcula o subtotal do item (valor multiplicado pela quantidade)
 
     total += subtotal;
-    quantidadeTotal += item.quantidade;
+    quantidadeTotal += item.quantidade; // soma a quantidade do item à quantidade total de itens no carrinho
 
     lista.innerHTML += `
-      <div class="item-carrinho">
+      <div class="item-carrinho"> // mostra as informações do item no carrinho, incluindo nome, código, quantidade, valor, subtotal e botões para aumentar ou diminuir a quantidade ou remover o item do carrinho
 
         <div>
 
@@ -321,7 +325,7 @@ function atualizarCarrinho() {
     `;
   });
 
-  totalCarrinho.innerText =
+  totalCarrinho.innerText = // mostra o valor total do carrinho, formatado como moeda brasileira
     total.toLocaleString("pt-BR", {
       style: "currency",
       currency: "BRL"
@@ -332,7 +336,7 @@ function atualizarCarrinho() {
       quantidadeTotal;
   }
 }
-
+// funções para aumentar ou diminuir a quantidade de um item no carrinho, ou remover o item do carrinho, atualizando as informações do carrinho após cada ação
 function aumentarQuantidade(id) {
 
   const item =
@@ -367,7 +371,7 @@ function diminuirQuantidade(id) {
   }
 
   atualizarCarrinho();
-}
+} 
 
 function removerDoCarrinho(id) {
 
@@ -435,7 +439,7 @@ function fecharCarrinho() {
     fundo.classList.remove("ativo");
   }
 }
-
+// funções para carregar os pedidos do repositor logado e os pedidos para o admin, mostrando as informações dos pedidos em tabelas específicas para cada função, e também para alterar o status de um pedido ou cancelar um pedido, atualizando as informações após cada ação
 async function carregarMeusPedidos() {
 
   const pedidos =
@@ -481,7 +485,7 @@ async function carregarMeusPedidos() {
   });
 }
 
-async function carregarAdmin() {
+async function carregarAdmin() { // função para carregar os pedidos para o admin, mostrando as informações dos pedidos em uma tabela específica para o admin, e também para alterar o status de um pedido ou cancelar um pedido, atualizando as informações após cada ação
 
   const pedidos = await buscar("/api/pedidos");
 
@@ -602,7 +606,7 @@ async function alterarStatus(id, status) {
 
   carregarAdmin();
 }
-async function cancelarPedido(id) {
+async function cancelarPedido(id) { // função para cancelar um pedido, mostrando uma confirmação antes de cancelar, e atualizando as informações após a ação
 
   const confirmar = confirm(
     "Tem certeza que deseja cancelar este pedido?"
@@ -627,7 +631,7 @@ async function cancelarPedido(id) {
 
   carregarAdmin();
 }
-async function buscar(url) {
+async function buscar(url) { // função genérica para buscar informações da API, enviando o token de autenticação no header da requisição e retornando os dados em formato JSON
 
   const resposta =
     await fetch(url, {
@@ -649,8 +653,7 @@ function sair() {
   location.reload();
 }
 
-function toggleSenha() {
-
+function toggleSenha() { // função para mostrar ou esconder a senha no campo de login, alterando o tipo do input entre "password" e "text"
   const senhaInput =
     document.getElementById("senha");
 
@@ -749,3 +752,5 @@ async function confirmarPedidoFinal(){
     );
   }
 }
+
+// funções para criar as tabelas no banco de dados, inserir os dados iniciais de clientes e usuários, e também para criar um usuário admin com senha criptografada usando bcrypt

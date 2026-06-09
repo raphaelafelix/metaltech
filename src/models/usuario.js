@@ -2,6 +2,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { getDB } = require("../database/sqlite");
 
+
+// módulo para gerenciar os usuários, incluindo uma função de login que verifica as credenciais do usuário e retorna um token JWT válido para autenticação nas rotas protegidas, utilizando a conexão com o banco de dados SQLite para recuperar as informações dos usuários
 async function login(email, senha, funcao) {
   const db = await getDB();
 
@@ -15,6 +17,7 @@ async function login(email, senha, funcao) {
 
   stmt.bind([email, funcao]);
 
+// verifica se o usuário existe e se a senha está correta, retornando um token JWT com as informações do usuário para autenticação nas rotas protegidas
   if (!stmt.step()) {
     stmt.free();
     return null;

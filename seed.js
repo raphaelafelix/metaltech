@@ -34,7 +34,37 @@ async function seed() {
     );
   `);
 
+
   const senha = bcrypt.hashSync("123456", 10);
+
+    // salva informações
+    const clientes = 
+      ['Lucas Ferreira Santos',   '11991234501']
+      ['Camila Rodrigues Lima',   '11991234502']
+      ['Rafael Oliveira Costa',   '11991234503']
+      ['Isabela Martins Souza',   '11991234504'] 
+      ['Bruno Almeida Pereira',   '11991234505'] 
+      ['Juliana Nascimento Dias', '11991234506']
+      ['Thiago Carvalho Mendes',  '11991234507']
+      ['Fernanda Gomes Ribeiro',  '11991234508'] 
+      ['Diego Barbosa Freitas',   '11991234509']
+      ['Larissa Teixeira Moura',  '11991234510']
+      ['Matheus Cardoso Nunes',   '11991234511']
+      ['Patrícia Rocha Vieira',   '11991234512']
+      ['Anderson Silva Campos',   '11991234513'] 
+      ['Natália Araújo Castro',   '11991234514']
+      ['Felipe Cunha Rezende',    '11991234515']
+      ['Vanessa Lopes Guimarães', '11991234516']
+      ['Gustavo Pires Andrade',   '11991234517']
+      ['Aline Moreira Fonseca',   '11991234518']
+      ['Rodrigo Tavares Monteiro','11991234519']
+      ['Carolina Batista Pinto',  '11991234520'];
+
+    for (const [nome, tel, end, obs] of clientes) {
+      run('INSERT INTO clientes (nome, telefone, endereco, observacoes) VALUES (?, ?, ?, ?)',
+        [nome, tel, JSON.stringify(end), obs]);
+    }
+    console.log(' 20 clientes criados');
 
   db.run(`
     INSERT OR IGNORE INTO usuarios (id, nome, email, senha, funcao)

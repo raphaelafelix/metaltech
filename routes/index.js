@@ -1,6 +1,7 @@
-const express = require("express");
+const express = require("express"); // importa o framework Express para criar o servidor web
 const router = express.Router();
 
+// importa os middlewares e modelos necessários para as rotas, como autenticação, usuário, pedido e produto
 const auth = require("../src/middlewares/auth");
 const Usuario = require("../src/models/usuario");
 const Pedido = require("../src/models/pedido");
@@ -18,6 +19,7 @@ router.post("/login", async (req, res) => {
   res.json(resultado);
 });
 
+// rota para listar os produtos disponíveis, protegida por autenticação, e retornando os produtos em formato JSON
 router.get("/produtos", auth, async (req, res) => {
   const produtos = await Produto.listarProdutos();
   res.json(produtos);

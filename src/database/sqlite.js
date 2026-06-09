@@ -1,3 +1,4 @@
+// módulo para gerenciar a conexão com o banco de dados SQLite usando a biblioteca sql.js, permitindo criar, ler, atualizar e salvar o banco de dados em um arquivo local
 const fs = require("fs");
 const path = require("path");
 const initSqlJs = require("sql.js");

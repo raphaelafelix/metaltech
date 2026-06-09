@@ -1,4 +1,5 @@
-const { getDB, salvarDB } = require("../database/sqlite");
+// módulo para gerenciar os pedidos, incluindo funções para criar um novo pedido, listar todos os pedidos, listar os pedidos de um repositório específico, atualizar o status de um pedido e excluir um pedido, utilizando a conexão com o banco de dados SQLite para armazenar e recuperar as informações dos pedidos
+const { getDB, salvarDB } = require("../database/sqlite"); // importa as funções para obter a conexão com o banco de dados e salvar as alterações no banco de dados
 
 async function criarPedido(usuario_id, produto_id, quantidade) {
   const db = await getDB();
@@ -18,7 +19,7 @@ async function criarPedido(usuario_id, produto_id, quantidade) {
 async function listarPedidos() {
   const db = await getDB();
 
-  const result = db.exec(`
+  const result = db.exec(` // consulta SQL para listar todos os pedidos, juntando as tabelas de pedidos, usuários e produtos para obter as informações completas de cada pedido, ordenando por ID em ordem decrescente
     SELECT 
       pedidos.id,
       usuarios.nome AS repositor,
@@ -74,7 +75,7 @@ async function listarPedidosDoRepositor(usuario_id) {
   while (stmt.step()) {
     const item = stmt.getAsObject();
 
-    pedidos.push({
+    pedidos.push({ // mapeia os resultados da consulta para um formato mais amigável, calculando o valor arrecadado multiplicando a quantidade pelo valor do produto
       id: item.id,
       codigo: item.codigo,
       produto: item.nome,
@@ -98,7 +99,7 @@ async function atualizarStatus(id, status) {
 
   salvarDB();
 
-  return { mensagem: "Status atualizado!" };
+  return { mensagem: "Status atualizado!" }; // retorna uma mensagem de sucesso após atualizar o status do pedido no banco de dados
 }
 
 module.exports = {
