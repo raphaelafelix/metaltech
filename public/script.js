@@ -128,8 +128,8 @@ async function carregarMostruario() {
             })}
           </strong>
 
-          <button onclick="adicionarAoCarrinho(${produto.id})">
-            🛒 Selecionar produto
+           <button onclick="adicionarAoCarrinho(${produto.id})">
+          > Selecionar produto
           </button>
 
         </div>
