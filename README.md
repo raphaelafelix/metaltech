@@ -208,3 +208,20 @@ Ferramentas:
 #  Licença
 
 Projeto desenvolvido para fins acadêmicos.
+
+
+
+
+
+
+
+#figma
+https://www.figma.com/design/i7ubHj4GnA4vzTmBUJU6AB/projetando?node-id=0-1&p=f&t=HmEmdZUjKEMV2Avy-0
+
+
+
+#Trello
+https://trello.com/invite/b/69d3fcddf0e534da7115a2a0/ATTI7c2cf1a55b4761c2b48e03835ada8be9862A1A7C/sprint1
+
+
+
